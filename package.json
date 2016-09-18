@@ -1,0 +1,40 @@
+{
+  "name": "any-aspect-ratio-carousel",
+  "version": "1.0.0",
+  "description": "Any aspect ratio carousel",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DrummerHead/any-aspect-ratio-carousel.git"
+  },
+  "author": "DrummerHead <drummerhead@gmail.com> (http://drummerhead.com/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/DrummerHead/any-aspect-ratio-carousel/issues"
+  },
+  "homepage": "https://github.com/DrummerHead/any-aspect-ratio-carousel#readme",
+  "dependencies": {
+    "brfs": "^1.4.3",
+    "hammerjs": "^2.0.8",
+    "insert-css": "^1.0.0"
+  },
+  "devDependencies": {
+    "babel-preset-es2015": "^6.14.0",
+    "babelify": "^7.3.0",
+    "brfs-babel": "^1.0.0",
+    "browser-sync": "^2.16.0",
+    "browserify": "^13.1.0",
+    "browserify-replace": "^0.9.0",
+    "gulp": "^3.9.1",
+    "gulp-load-plugins": "^1.3.0",
+    "gulp-size": "^2.1.0",
+    "rollupify": "^0.3.4",
+    "uglifyify": "^3.0.3",
+    "vinyl-buffer": "^1.0.0",
+    "vinyl-source-stream": "^1.1.0",
+    "watchify": "^3.7.0"
+  }
+}
