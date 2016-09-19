@@ -9,7 +9,7 @@ const $ = gulpLoadPlugins();
 const reload = browserSync.reload;
 
 const buildScripts = debug => {
-  let b = browserify('./src/main.js', {
+  let b = browserify('./src/javascript/main.js', {
     debug,
     standalone: 'aar-carousel',
     cache: {},
@@ -23,27 +23,30 @@ const buildScripts = debug => {
     .pipe($.size({title: 'scripts'}))
     .pipe(gulp.dest('dist'));
 
-  if (debug) {
-    b = b
-      .transform('rollupify')
-      .transform('brfs-babel')
-      .transform('babelify')
-      .plugin('watchify')
-      .on('update', bundle);
-  } else {
-    b = b
-      .transform('rollupify')
-      .transform('brfs-babel')
-      .transform('babelify')
-      .transform('uglifyify');
-  }
+  b = b
+    .transform('rollupify')
+    .transform('brfs-babel')
+    .transform('babelify')
+    .transform('uglifyify');
 
   return bundle();
 };
 
-gulp.task('scripts-debug', () => buildScripts(true));
+gulp.task('scripts-debug', ['styles'], () => buildScripts(true));
 
-gulp.task('scripts', () => buildScripts(false));
+gulp.task('scripts', ['styles'], () => buildScripts(false));
+
+gulp.task('styles', () => {
+  return gulp.src('src/stylesheets/*.scss')
+    .pipe($.plumber())
+    .pipe($.sass.sync({
+      outputStyle: 'expanded',
+      precision: 10,
+      includePaths: ['.'],
+    }).on('error', $.sass.logError))
+    .pipe($.autoprefixer({ browsers: ['> 1%', 'last 2 versions', 'Firefox ESR'] }))
+    .pipe(gulp.dest('.tmp/stylesheets'))
+});
 
 gulp.task('serve', ['scripts-debug'], () => {
   browserSync({
@@ -53,11 +56,18 @@ gulp.task('serve', ['scripts-debug'], () => {
     server: {
       baseDir: 'demo',
       routes: {
-        '/dist': 'dist'
+        '/dist': 'dist',
+        '/tmp': '.tmp',
       }
     },
   });
 
-  gulp.watch(['demo/*.*'], reload);
-  gulp.watch(['dist/*.js'], reload);
-})
+  gulp.watch([
+    'demo/*.*',
+    'dist/main.js',
+    '.tmp/stylesheets/main.css',
+  ]).on('change', reload);
+
+  gulp.watch('src/stylesheets/*.scss', ['styles']);
+  gulp.watch('src/javascript/*.js', ['scripts']);
+});
