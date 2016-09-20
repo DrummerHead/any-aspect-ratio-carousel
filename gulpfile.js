@@ -8,16 +8,24 @@ const buffer = require('vinyl-buffer');
 const $ = gulpLoadPlugins();
 const reload = browserSync.reload;
 
+
+// JavaScript
+// =======================
+
 const buildScripts = debug => {
   let b = browserify('./src/javascript/main.js', {
     debug,
-    standalone: 'aar-carousel',
+    standalone: 'aarCarousel',
     cache: {},
     packageCache: {},
   });
 
   const bundle = () => b
     .bundle()
+    .on('error', (err) => {
+      console.log(err);
+      this.emit('end');
+    })
     .pipe(source('main.min.js'))
     .pipe(buffer())
     .pipe($.size({title: 'scripts'}))
@@ -36,6 +44,29 @@ gulp.task('scripts-debug', ['styles'], () => buildScripts(true));
 
 gulp.task('scripts', ['styles'], () => buildScripts(false));
 
+
+// JavaScript minification
+// -----------------------
+
+
+// JavaScript linting
+// -----------------------
+
+const lint = (files, options) => {
+  return gulp.src(files)
+    .pipe(reload({stream: true, once: true}))
+    .pipe($.eslint(options))
+    .pipe($.eslint.format())
+};
+
+gulp.task('lint', () => {
+  return lint('src/javascript/**/*.js')
+});
+
+
+// Style
+// =======================
+
 gulp.task('styles', () => {
   return gulp.src('src/stylesheets/*.scss')
     .pipe($.plumber())
@@ -47,6 +78,29 @@ gulp.task('styles', () => {
     .pipe($.autoprefixer({ browsers: ['> 1%', 'last 2 versions', 'Firefox ESR'] }))
     .pipe(gulp.dest('.tmp/stylesheets'))
 });
+
+
+// Style minification
+// -----------------------
+
+
+// Style linting
+// -----------------------
+
+gulp.task('sass-lint', () =>
+  gulp.src('src/stylesheets/*.scss')
+    .pipe($.sassLint({
+      configFile: '.sass-lint.yml',
+    }))
+    .pipe($.sassLint.format())
+    .pipe($.sassLint.failOnError())
+);
+
+gulp.task('scss-lint', ['sass-lint'])
+
+
+// Serving Demo
+// =======================
 
 gulp.task('serve', ['scripts-debug'], () => {
   browserSync({
