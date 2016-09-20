@@ -1,3 +1,6 @@
 document.addEventListener('DOMContentLoaded', (event) => {
-  aarCarousel();
+  aarCarousel({
+    height: '90vh',
+    slideTransitionDuration: 576, // miliseconds
+  });
 });

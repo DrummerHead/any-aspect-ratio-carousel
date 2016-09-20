@@ -1,16 +1,15 @@
 // import ins from './insert-css-dep'
 // ins();
 
-const buildCarousel = (element) => {
-  console.log(element);
-  console.log(5);
-}
+import AarCarousel from './AarCarousel';
 
-const anyResolutionCarousel = () => {
+const initCarousels = (opts) => {
   const carousels = document.querySelectorAll('.aar-carousel');
-  for(const carousel of carousels) {
-    buildCarousel(carousel);
+
+  for (const carousel of carousels) {
+    new AarCarousel(carousel, opts);
   }
 };
 
-export default anyResolutionCarousel
+
+export default initCarousels;

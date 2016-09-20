@@ -6,4 +6,4 @@ import { join } from 'path';
 const css = readFileSync(join(__dirname, '../../.tmp/stylesheets/main.css'), 'utf8');
 insertCss(css);
 
-export default () => insertCss(css)
+export default () => insertCss(css);
