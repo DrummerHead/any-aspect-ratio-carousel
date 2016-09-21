@@ -29,9 +29,23 @@
     position: absolute;
     top: 0;
     bottom: 0;
-    width: 20%;
-    background-color: rgba(red, .5);
+    width: 10%;
+    min-width: 3rem;
     cursor: pointer;
+
+    svg {
+      position: absolute;
+      top: 50%;
+      left: 15%;
+      width: 70%;
+      transform: translateY(-50%);
+      background-color: rgba(255, 255, 255, .2);
+      border-radius: 50%;
+
+      path {
+        fill: rgba(0, 0, 0, .5);
+      }
+    }
   }
 
   .aar-carousel__prev {
@@ -44,8 +58,8 @@
 
   .pan {
     animation-name: aar-carousel-pan;
-    animation-timing-function: linear;
-    animation-duration: 1000ms;
+    animation-timing-function: cubic-bezier(.45,.05,.55,.95);
+    animation-duration: 10000ms;
     animation-fill-mode: both;
   }
 
@@ -56,7 +70,11 @@
     object-position: 0% 0%;
   }
 
-  100% {
+  50% {
     object-position: 100% 100%;
+  }
+
+  100% {
+    object-position: 50% 50%;
   }
 }

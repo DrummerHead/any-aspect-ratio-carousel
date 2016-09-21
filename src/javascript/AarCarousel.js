@@ -19,6 +19,8 @@ class AarCarousel {
     return ((imageNumber % this.length) + this.length) % this.length;
   }
 
+
+
   nextImage() {
     this.goToImage(this.imageNumber + 1);
   }
@@ -43,10 +45,14 @@ class AarCarousel {
     this.elementReference.insertAdjacentHTML('beforeend', `
       <div class='aar-carousel__controls'>
         <div class='aar-carousel__prev'>
-          prev
+          <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'>
+            <path d='M56.3 17.5l10 10L43.5 50l22.6 22.6-10 10L24 50'/>
+          </svg>
         </div>
         <div class='aar-carousel__next'>
-          next
+          <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'>
+            <path d='M43.7 17.5l-10 10L56.5 50 33.8 72.6l10 10L76 50'/>
+          </svg>
         </div>
       </div>
     `);
