@@ -1,5 +1,5 @@
 class AarCarousel {
-  constructor(elementReference, { height = '90vh', slideTransitionDuration = 576 } = {}) {
+  constructor(elementReference, { height = '88vh', slideTransitionDuration = 576, imagePanning = false } = {}) {
     this.elementReference = elementReference;
     this.ol = this.elementReference.querySelector('ol');
     this.chariots = this.ol.querySelectorAll('li');
@@ -8,6 +8,7 @@ class AarCarousel {
 
     this.height = height;
     this.slideTransitionDuration = slideTransitionDuration;
+    this.imagePanning = imagePanning;
 
     this.imageNumber = 0;
     this.prevImageNumber = 0;
@@ -18,8 +19,6 @@ class AarCarousel {
   safeImageNumber(imageNumber) {
     return ((imageNumber % this.length) + this.length) % this.length;
   }
-
-
 
   nextImage() {
     this.goToImage(this.imageNumber + 1);
@@ -36,7 +35,7 @@ class AarCarousel {
     this.ol.style.transform = `translateX(-${this.chariotWidth * this.imageNumber}%)`;
   }
 
-  afterTransition() {
+  panAfterTransition() {
     this.chariots[this.prevImageNumber].querySelector('img').classList.remove('pan');
     this.chariots[this.imageNumber].querySelector('img').classList.add('pan');
   }
@@ -67,7 +66,11 @@ class AarCarousel {
 
     this.ol.style.width = `${this.length * 100}%`;
     this.ol.style.transitionDuration = `${this.slideTransitionDuration}ms`;
-    this.ol.addEventListener('transitionend', () => this.afterTransition());
+
+    if (this.imagePanning) {
+      this.elementReference.classList.add('aar--image-panning');
+      this.ol.addEventListener('transitionend', () => this.panAfterTransition());
+    }
 
     for (const chariot of this.chariots) {
       chariot.style.width = `${this.chariotWidth}%`;
