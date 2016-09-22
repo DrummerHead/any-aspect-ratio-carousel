@@ -7,9 +7,8 @@ const initCarousels = (opts) => {
   const carousels = document.querySelectorAll('.aar-carousel');
 
   for (const carousel of carousels) {
-    new AarCarousel(carousel, opts);
+    (new AarCarousel(carousel, opts)).buildUI();
   }
 };
-
 
 export default initCarousels;

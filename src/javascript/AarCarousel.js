@@ -1,3 +1,5 @@
+import SwipeEvent from './SwipeEvent';
+
 class AarCarousel {
   constructor(elementReference, { height = '88vh', slideTransitionDuration = 576, imagePanning = false } = {}) {
     this.elementReference = elementReference;
@@ -12,8 +14,6 @@ class AarCarousel {
 
     this.imageNumber = 0;
     this.prevImageNumber = 0;
-
-    this.buildUI();
   }
 
   safeImageNumber(imageNumber) {
@@ -78,6 +78,11 @@ class AarCarousel {
 
     this.attachControls();
     this.goToImage(0);
+
+    (new SwipeEvent(this.elementReference)).init();
+
+    this.elementReference.addEventListener('swiperight', () => this.previousImage());
+    this.elementReference.addEventListener('swipeleft', () => this.nextImage());
   }
 }
 
