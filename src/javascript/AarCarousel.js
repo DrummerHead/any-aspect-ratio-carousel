@@ -31,7 +31,6 @@ class AarCarousel {
   goToImage(imageNumber) {
     this.prevImageNumber = this.imageNumber;
     this.imageNumber = this.safeImageNumber(imageNumber);
-
     this.ol.style.transform = `translateX(-${this.chariotWidth * this.imageNumber}%)`;
   }
 
@@ -55,10 +54,12 @@ class AarCarousel {
         </div>
       </div>
     `);
-    const prev = this.elementReference.querySelector('.aar-carousel__prev');
-    const next = this.elementReference.querySelector('.aar-carousel__next');
-    prev.addEventListener('click', () => this.previousImage());
-    next.addEventListener('click', () => this.nextImage());
+
+    this.elementReference.querySelector('.aar-carousel__prev')
+      .addEventListener('click', () => this.previousImage());
+
+    this.elementReference.querySelector('.aar-carousel__next')
+      .addEventListener('click', () => this.nextImage());
   }
 
   buildUI() {
@@ -67,22 +68,21 @@ class AarCarousel {
     this.ol.style.width = `${this.length * 100}%`;
     this.ol.style.transitionDuration = `${this.slideTransitionDuration}ms`;
 
+    for (const chariot of this.chariots) {
+      chariot.style.width = `${this.chariotWidth}%`;
+    }
+
+    (new SwipeEvent(this.ol)).init();
+    this.ol.addEventListener('swiperight', () => this.previousImage());
+    this.ol.addEventListener('swipeleft', () => this.nextImage());
+
     if (this.imagePanning) {
       this.elementReference.classList.add('aar--image-panning');
       this.ol.addEventListener('transitionend', () => this.panAfterTransition());
     }
 
-    for (const chariot of this.chariots) {
-      chariot.style.width = `${this.chariotWidth}%`;
-    }
-
     this.attachControls();
     this.goToImage(0);
-
-    (new SwipeEvent(this.elementReference)).init();
-
-    this.elementReference.addEventListener('swiperight', () => this.previousImage());
-    this.elementReference.addEventListener('swipeleft', () => this.nextImage());
   }
 }
 
