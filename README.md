@@ -111,7 +111,7 @@ Defaults to '576' if not specified.
 Wether to use the panning effect or not.  
 Defaults to `false` if not specified.
 
-Check URL to see a live example
+[See an example](http://mcdlr.com/any-aspect-ratio-carousel/#usage)
 
 
 ### Panning effect
@@ -126,7 +126,7 @@ aarCarousel({
 });
 ```
 
-Check URL to see a live example
+[See an example](http://mcdlr.com/any-aspect-ratio-carousel/#panning_effect)
 
 
 ### Inline attributes
