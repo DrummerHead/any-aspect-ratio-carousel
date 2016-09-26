@@ -1,7 +1,7 @@
-// import ins from './insert-css-dep'
-// ins();
-
+import ins from './insert-css-dep';
 import AarCarousel from './AarCarousel';
+
+ins();
 
 const getInlineAttributes = (element) => {
   const data = element.dataset;

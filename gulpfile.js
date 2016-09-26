@@ -1,3 +1,4 @@
+const fs = require('fs');
 const gulp = require('gulp');
 const browserSync = require('browser-sync');
 const gulpLoadPlugins = require('gulp-load-plugins');
@@ -33,7 +34,6 @@ const buildScripts = debug => {
 
   b = b
     .transform('rollupify')
-    .transform('brfs-babel')
     .transform('babelify')
     .transform('uglifyify');
 
@@ -42,7 +42,7 @@ const buildScripts = debug => {
 
 gulp.task('scripts-debug', ['styles'], () => buildScripts(true));
 
-gulp.task('scripts', ['styles'], () => buildScripts(false));
+gulp.task('scripts', ['inject-css'], () => buildScripts(false));
 
 
 // JavaScript minification
@@ -83,6 +83,13 @@ gulp.task('styles', () => {
 // Style minification
 // -----------------------
 
+gulp.task('styles-minify', ['styles'], () => {
+  return gulp.src('.tmp/stylesheets/main.css')
+    .pipe($.cssnano())
+    .pipe(gulp.dest('.tmp/stylesheets/'))
+});
+
+
 
 // Style linting
 // -----------------------
@@ -97,6 +104,16 @@ gulp.task('sass-lint', () =>
 );
 
 gulp.task('scss-lint', ['sass-lint'])
+
+
+// Style injecting in JS
+// -----------------------
+
+gulp.task('inject-css', ['styles-minify'], () => {
+  gulp.src('src/javascript/insert-css-dep.js')
+    .pipe($.replace(/^const css ?= '[^']*';$/m, `const css = '${fs.readFileSync(__dirname + '/.tmp/stylesheets/main.css', 'utf8')}';`))
+    .pipe(gulp.dest('src/javascript/'))
+});
 
 
 // Serving Demo
@@ -124,4 +141,14 @@ gulp.task('serve', ['scripts-debug'], () => {
 
   gulp.watch('src/stylesheets/*.scss', ['styles']);
   gulp.watch('src/javascript/*.js', ['scripts']);
+});
+
+
+// Build dist js
+// =======================
+
+gulp.task('build-js', ['scripts'], () => {
+  gulp.src('dist/main.min.js')
+    .pipe($.uglify())
+    .pipe(gulp.dest('dist'))
 });
