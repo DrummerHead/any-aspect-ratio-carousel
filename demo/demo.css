@@ -1,3 +1,25 @@
+html {
+  font-family: sans-serif;
+  line-height: 1.4;
+  font-size: 1em;
+}
+
 body {
-  color: blue;
+  margin: 0 auto;
+  max-width: 55em;
+  padding: 2em;
+}
+
+pre {
+  background-color: #eee;
+  padding: 1em;
+  border-radius: .5em;
+  overflow: auto;
+}
+
+code {
+  font-family: monospace;
+  font-size: 1.2em;
+  background-color: #eee;
+  padding: .1em;
 }
