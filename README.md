@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 ### With `script` element
 
-Download [/dist/aarCarousel.min.js]() to your project and then
+Download [/dist/aarCarousel.min.js](https://raw.githubusercontent.com/DrummerHead/any-aspect-ratio-carousel/master/dist/aarCarousel.min.js) to your project and then
 
 ```
 <!doctype html>
