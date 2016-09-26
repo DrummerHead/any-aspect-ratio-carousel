@@ -27,7 +27,7 @@ const buildScripts = debug => {
       console.log(err);
       this.emit('end');
     })
-    .pipe(source('main.min.js'))
+    .pipe(source('aarCarousel.min.js'))
     .pipe(buffer())
     .pipe($.size({title: 'scripts'}))
     .pipe(gulp.dest('dist'));
@@ -135,7 +135,7 @@ gulp.task('serve', ['scripts-debug'], () => {
 
   gulp.watch([
     'demo/*.*',
-    'dist/main.js',
+    'dist/aarCarousel.min.js',
     '.tmp/stylesheets/main.css',
   ]).on('change', reload);
 
@@ -148,7 +148,7 @@ gulp.task('serve', ['scripts-debug'], () => {
 // =======================
 
 gulp.task('build-js', ['scripts'], () => {
-  gulp.src('dist/main.min.js')
+  gulp.src('dist/aarCarousel.min.js')
     .pipe($.uglify())
     .pipe(gulp.dest('dist'))
 });

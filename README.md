@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 ### With `script` element
 
-Download [/dist/main.min.js]() to your project and then
+Download [/dist/aarCarousel.min.js]() to your project and then
 
 ```
 <!doctype html>
@@ -49,7 +49,7 @@ Download [/dist/main.min.js]() to your project and then
     [...]
   </div>
 
-  <script src='/my-script-location/main.min.js'></script>
+  <script src='/my-script-location/aarCarousel.min.js'></script>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       aarCarousel({
