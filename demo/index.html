@@ -2,13 +2,119 @@
 <html>
 <head>
   <meta charset='utf-8'>
-  <title></title>
+  <title>Any Aspect Ratio Carousel</title>
   <meta name='description' content=''>
   <meta name='viewport' content='width=device-width, initial-scale=1'>
   <link rel='stylesheet' href='/tmp/stylesheets/main.css'>
   <link rel='stylesheet' href='demo.css'>
 </head>
 <body>
+
+  <h1><a id='any_aspect_ratio_carousel'></a>Any Aspect Ratio Carousel</h1>
+
+  <p>Yet another Carousel! But this one has these features:</p>
+
+  <ul>
+    <li>Images of any aspect ratio can be viewed fully without specifying their size</li>
+    <li>Low footprint, little JS to download and parse, no dependencies</li>
+    <li>Adapts to any container’s width</li>
+    <li>Mobile friendly (swipe events, responsive)</li>
+    <li>Fails gracefully on absence of JS (shows list of images)</li>
+    <li>Only for <code>img</code> elements (may get support for <code>picture</code> element in the future)</li>
+  </ul>
+
+  <h2><a id='install'></a>Install</h2>
+
+  <h3><a id='with_browserify'></a>With <a href='http://browserify.org/'>Browserify</a></h3>
+
+<pre><code>npm install --save any-aspect-ratio-carousel
+</code></pre>
+
+<pre><code>// main.js
+
+import aarCarousel from 'any-aspect-ratio-carousel'
+
+document.addEventListener('DOMContentLoaded', () =&gt; {
+  aarCarousel({
+    height: '88vh',
+    slideTransitionDuration: 576, // miliseconds
+  });
+});
+</code></pre>
+
+  <h3><a id='with_script_element'></a>With <code>script</code> element</h3>
+
+  <p>Download <a href=''>/dist/main.min.js</a> to your project and then</p>
+
+<pre><code>&lt;!doctype html&gt;
+&lt;html&gt;
+&lt;head&gt;
+  [...]
+&lt;/head&gt;
+&lt;body&gt;
+
+  &lt;div class='aar-carousel'&gt;
+    [...]
+  &lt;/div&gt;
+
+  &lt;script src='/my-script-location/main.min.js'&gt;&lt;/script&gt;
+  &lt;script&gt;
+    document.addEventListener('DOMContentLoaded', () =&gt; {
+      aarCarousel({
+        height: '88vh',
+        slideTransitionDuration: 576, // miliseconds
+      });
+    });
+  &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+
+  <h2><a id='usage'></a>Usage</h2>
+
+  <p>The HTML required for the gallery is:</p>
+
+<pre><code>&lt;div class='aar-carousel'&gt;
+  &lt;ol&gt;
+    &lt;li&gt;
+      &lt;img src='alpha.jpg' alt='alpha'&gt;
+    &lt;/li&gt;
+    &lt;li&gt;
+      &lt;img src='bravo.png' alt='bravo'&gt;
+    &lt;/li&gt;
+    &lt;li&gt;
+      &lt;img src='and-so-forth.gif' alt='any amount of li with images'&gt;
+    &lt;/li&gt;
+  &lt;/ol&gt;
+&lt;/div&gt;
+</code></pre>
+
+  <p>There can be any amount of galleries in a page.</p>
+
+  <p>And to initialize the gallery:</p>
+
+<pre><code>aarCarousel({
+  height: '88vh',
+  slideTransitionDuration: 576,
+  imagePanning = false,
+});
+</code></pre>
+
+  <p>With these possible settings:</p>
+
+  <p><strong>height</strong> {string}<br>
+  The height of the carousel.<br>
+  Defaults to ‘88vh’ if not specified.</p>
+
+  <p><strong>slideTransitionDuration</strong> {number}<br>
+  How long the transition is between one image and the other, in milliseconds.<br>
+  Defaults to ‘576’ if not specified.</p>
+
+  <p><strong>imagePanning</strong> {boolean}<br>
+  Wether to use the panning effect or not.<br>
+  Defaults to <code>false</code> if not specified.</p>
+
+  <p>The resulting Carousel (with actual <code>img</code> attributes) will be:</p>
 
   <div class='aar-carousel'>
     <ol>
@@ -47,6 +153,84 @@
       </li>
     </ol>
   </div>
+
+  <h3><a id='panning_effect'></a>Panning effect</h3>
+
+  <p>If the <code>imagePanning</code> attribute is set to true, the images on the carousel will fill the available space and pan right/left or top/down to show all the image (depending on the ratio). Take notice that this effect does not work in Safari (Safari does not animate <code>object-position</code>).</p>
+
+<pre><code>aarCarousel({
+  height: '88vh',
+  slideTransitionDuration: 576, // miliseconds
+  imagePanning: true,
+});
+</code></pre>
+
+  <p>Example:</p>
+
+  <div class='aar-carousel' data-image-panning>
+    <ol>
+      <li>
+        <img src='https://c2.staticflickr.com/9/8113/29554676201_57ebe30b4a_c.jpg' alt='The colors of Twilight Begin'>
+      </li>
+      <li>
+        <img src='https://c3.staticflickr.com/9/8169/29097534802_c6aa9cc3a9_h.jpg' alt='Sunrise in Vegas!'>
+      </li>
+      <li>
+        <img src='https://c6.staticflickr.com/9/8074/29082175741_36993237a2_c.jpg' alt='Hotel Hall Way in sin city'>
+      </li>
+      <li>
+        <img src='https://c8.staticflickr.com/8/7624/26793158231_c1c127b8ec_h.jpg' alt='Taken during a beautiful sunset at Rodeo Beach, in California'>
+      </li>
+      <li>
+        <img src='https://c3.staticflickr.com/8/7778/26228366194_a7f4f05571_c.jpg' alt='Swept away'>
+      </li>
+      <li>
+        <img src='https://c4.staticflickr.com/2/1613/24471633235_d9a73bce2c_h.jpg' alt='Taken along the Embarcadero street of San Francisco'>
+      </li>
+      <li>
+        <img src='https://c3.staticflickr.com/2/1634/24152470410_e376e2f435_c.jpg' alt='Rain puddle on parking lot along the Embarcadero Street of San Francisco'>
+      </li>
+      <li>
+        <img src='https://c3.staticflickr.com/6/5651/23671426442_fcf4ff1e85_b.jpg' alt='Bay Bridge connection of San Francisco an Oakland'>
+      </li>
+      <li>
+        <img src='https://c7.staticflickr.com/6/5715/23562873926_d570b72f49_c.jpg' alt='Bay Bridge and Mesmerizing view of city under the bridge'>
+      </li>
+      <li>
+        <img src='https://c2.staticflickr.com/6/5810/22485235201_610f2d3b6b_h.jpg' alt='On the way driving home from Yosemite yesterday, I saw this spectacular and incredible sunset pull over on the side of the road taken a few shot'>
+      </li>
+      <li>
+        <img src='https://c2.staticflickr.com/1/648/22765280129_d61494be25_c.jpg' alt='The old road on Yosemite Valley National Park'>
+      </li>
+    </ol>
+  </div>
+
+  <h3><a id='inline_attributes'></a>Inline attributes</h3>
+
+  <p>You can have as many galleries in a page as you want. With the initializing JS you can configure all of them.</p>
+
+  <p>However, if you’d like a particular gallery to have different settings, you can assign it inline attributes that will override the defaults set by you, like so:</p>
+
+<pre><code>&lt;div class='aar-carousel' data-height='120em' data-slide-transition-duration='777' data-image-panning&gt;
+  &lt;ol&gt;
+    &lt;li&gt;
+      &lt;img src='alpha.jpg' alt='alpha'&gt;
+    &lt;/li&gt;
+    &lt;li&gt;
+      &lt;img src='bravo.png' alt='bravo'&gt;
+    &lt;/li&gt;
+    &lt;li&gt;
+      &lt;img src='and-so-forth.gif' alt='any amount of li with images'&gt;
+    &lt;/li&gt;
+  &lt;/ol&gt;
+&lt;/div&gt;
+</code></pre>
+
+  <p>While <code>data-height</code> and <code>data-slide-transition-duration</code> need explicit values, <code>data-image-panning</code> only needs to be present to be true (and its absence means false, unless stated in the initializing JS)</p>
+
+  <h2><a id='contributing'></a>Contributing</h2>
+
+  <p>If you’d like to see a feature, create an issue and/or make a pull request. Keep in mind that lightweight code, responsiveness and usability are the tenets of this small project. Cheers!</p>
 
   <script src='/dist/main.min.js'></script>
   <script src='demo.js'></script>
