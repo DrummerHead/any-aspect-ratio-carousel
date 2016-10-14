@@ -93,7 +93,7 @@ And to initialize the gallery:
 aarCarousel({
   height: '88vh',
   slideTransitionDuration: 576,
-  imagePanning = false,
+  imagePanning: false,
 });
 ```
 
