@@ -1,12 +1,15 @@
 $main-bg-color: #222;
-$arrow-color: rgba(0, 0, 0, .5);
-$arrow-bg-color: rgba(255, 255, 255, .2);
+$controls-color: rgba(0, 0, 0, .5);
+$controls-bg-color: rgba(255, 255, 255, .2);
+$maximize-duration: 500ms;
+$maximize-timing-function: ease-in;
 
 .aar-carousel {
   box-sizing: border-box;
   position: relative;
-  width: 100%;
+  height: 100%;
   background-color: $main-bg-color;
+  cursor: pointer;
   overflow: hidden;
 
   ol {
@@ -16,8 +19,7 @@ $arrow-bg-color: rgba(255, 255, 255, .2);
     transform: translateX(0%);
     transition: transform cubic-bezier(.4, 0, .16, 1) 576ms;
     list-style-type: none;
-    // will change in firefox is buggy
-    // will-change: transform;
+    //will-change: transform;
   }
 
   li {
@@ -30,52 +32,89 @@ $arrow-bg-color: rgba(255, 255, 255, .2);
     height: 100%;
     object-fit: contain;
   }
+}
 
-  &.aar--image-panning img {
-    object-position: 0% 0%;
-    object-fit: cover;
+.aar-carousel--image-panning img {
+  object-position: 0% 0%;
+  object-fit: cover;
+}
+
+.aar-carousel--maximize {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: auto;
+  height: auto;
+  transition-duration: $maximize-duration;
+  transition-property: top, right, bottom, left;
+  transition-timing-function: $maximize-timing-function;
+  cursor: auto;
+  z-index: 9001;
+
+  .aar-carousel__close {
+    opacity: 1;
+    pointer-events: auto;
   }
+}
 
-  .aar-carousel__prev,
-  .aar-carousel__next {
+.aar-carousel__prev,
+.aar-carousel__next {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 10%;
+  min-width: 3rem;
+  cursor: pointer;
+
+  svg {
     position: absolute;
-    top: 0;
-    bottom: 0;
-    width: 10%;
-    min-width: 3rem;
-    cursor: pointer;
+    top: 50%;
+    left: 15%;
+    width: 70%;
+    transform: translateY(-50%);
+    border-radius: 50%;
+    background-color: $controls-bg-color;
 
-    svg {
-      position: absolute;
-      top: 50%;
-      left: 15%;
-      width: 70%;
-      transform: translateY(-50%);
-      border-radius: 50%;
-      background-color: $arrow-bg-color;
-
-      path {
-        fill: $arrow-color;
-      }
+    path {
+      fill: $controls-color;
     }
   }
-
-  .aar-carousel__prev {
-    left: 0;
-  }
-
-  .aar-carousel__next {
-    right: 0;
-  }
-
-  .pan {
-    animation-name: aar-carousel-pan;
-    animation-timing-function: cubic-bezier(.45, .05, .55, .95);
-    animation-duration: 10000ms;
-    animation-fill-mode: both;
-  }
-
 }
+
+.aar-carousel__prev {
+  left: 0;
+}
+
+.aar-carousel__next {
+  right: 0;
+}
+
+.aar-carousel__close {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 1em;
+  font-size: 4em;
+  line-height: 1;
+  transition: opacity $maximize-duration $maximize-timing-function;
+  text-align: center;
+  color: $controls-color;
+  background-color: $controls-bg-color;
+  cursor: pointer;
+  opacity: 0;
+  user-select: none;
+  pointer-events: none;
+}
+
+.aar-carousel--pan {
+  animation-name: aar-carousel-pan;
+  animation-timing-function: cubic-bezier(.45, .05, .55, .95);
+  animation-duration: 10000ms;
+  animation-fill-mode: both;
+}
+
 
 @keyframes aar-carousel-pan {
   0% {

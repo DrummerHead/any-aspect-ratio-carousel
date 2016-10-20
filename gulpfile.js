@@ -59,7 +59,7 @@ const lint = (files, options) => {
     .pipe($.eslint.format())
 };
 
-gulp.task('lint', () => {
+gulp.task('js-lint', () => {
   return lint('src/javascript/**/*.js')
 });
 
