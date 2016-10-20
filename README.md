@@ -27,11 +27,10 @@ import aarCarousel from 'any-aspect-ratio-carousel'
 document.addEventListener('DOMContentLoaded', () => {
   aarCarousel({
     height: '88vh',
-    slideTransitionDuration: 576, // miliseconds
+    slideTransitionDuration: 576, // milliseconds
   });
 });
 ```
-
 
 ### With `script` element
 
@@ -60,7 +59,6 @@ Download [/dist/aarCarousel.min.js](https://raw.githubusercontent.com/DrummerHea
   </script>
 </body>
 </html>
-
 ```
 
 
@@ -108,7 +106,7 @@ How long the transition is between one image and the other, in milliseconds.
 Defaults to '576' if not specified.
 
 **imagePanning** {boolean}  
-Wether to use the panning effect or not.  
+Whether to use the panning effect or not.  
 Defaults to `false` if not specified.
 
 [See an example](http://mcdlr.com/any-aspect-ratio-carousel/#usage)
@@ -121,7 +119,7 @@ If the `imagePanning` attribute is set to true, the images on the carousel will 
 ```
 aarCarousel({
   height: '88vh',
-  slideTransitionDuration: 576, // miliseconds
+  slideTransitionDuration: 576, // milliseconds
   imagePanning: true,
 });
 ```
@@ -157,11 +155,46 @@ While `data-height` and `data-slide-transition-duration` need explicit values, `
 
 ## Compatibility
 
-TODO: Test in different browsers
+TODO: Test in different browsers. Spoiler alert: will not work on IE6.
 
 
 
-## Contributing
+## Development
 
-If you'd like to see a feature, create an issue and/or make a pull request. Keep in mind that lightweight code, responsiveness and usability are the tenets of this small project. Cheers!
+The CSS for the final product is shipped with the JS iteslf via [insert-css](https://github.com/substack/insert-css), but for development we need to deal with the CSS uninjected. To do this:
 
+1. On `src/javascript/main.js` comment out `import ins from './insert-css-dep';` and `ins();`
+2. On `demo/index.html` uncomment `<link rel='stylesheet' href='tmp/stylesheets/main.css'>`
+
+And after this dance, run:
+
+```
+gulp serve
+```
+
+To run a localhost server. If you have a better way to do this process, recommendations and forks accepted :)
+
+After doing your changes, lint the code with:
+
+```
+gulp js-lint
+```
+
+Make any fixes if necessary and then
+
+```
+gulp scss-lint
+```
+
+Make any fixes if necessary and then you'll have to reverse the previous steps, namely:
+
+1. On `src/javascript/main.js` uncomment `import ins from './insert-css-dep';` and `ins();`
+2. On `demo/index.html` comment `<link rel='stylesheet' href='tmp/stylesheets/main.css'>`
+
+And then run
+
+```
+gulp build-js
+```
+
+To generate the final bundle.
