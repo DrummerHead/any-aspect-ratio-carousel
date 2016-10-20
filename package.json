@@ -1,6 +1,6 @@
 {
   "name": "any-aspect-ratio-carousel",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "Any aspect ratio carousel",
   "main": "dist/aarCarousel.min.js",
   "scripts": {
