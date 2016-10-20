@@ -17,8 +17,6 @@
   },
   "homepage": "https://github.com/DrummerHead/any-aspect-ratio-carousel#readme",
   "dependencies": {
-    "brfs": "^1.4.3",
-    "hammerjs": "^2.0.8",
     "insert-css": "^1.0.0"
   },
   "devDependencies": {
